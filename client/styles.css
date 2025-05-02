@@ -7,19 +7,20 @@
 
 /* Basic layout and typography */
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Inter", sans-serif;
     background: linear-gradient(to bottom right, #f0f4f8, #e4e8eb);
     color: #333;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* flex-direction: column; */
     height: 100vh;
     text-align: center;
+    align-items: center;
 }
 
 .container {
     max-width: 600px;
     width: 100%;
+    height: 26vw;
     padding: 20px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -81,12 +82,14 @@ input[type="submit"]:hover {
 /* Palette Display */
 .palette-section {
     margin-top: 20px;
+    width: 50vh;
+    height: 50vh;
+    display: flex;
 }
 
 .palette-section div {
-    width: 50px;
-    height: 50px;
     margin: 5px;
+    max-height: 50vh;
     border-radius: 5px;
 }
 
@@ -116,3 +119,28 @@ input[type="submit"]:hover {
         padding: 8px;
     }
 }
+
+#palettes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#one, #two, #three, #four, #five {
+    height: 600px;
+    width: 18%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#oneHead, #twoHead, #threeHead, #fourHead, #fiveHead{
+    font-size: 10px;
+    margin-bottom: 40px;
+}
+
+#colorsDiv{
+    display: flex;
+}
+
