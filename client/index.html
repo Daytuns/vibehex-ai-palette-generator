@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeHex - AI Palette Generator</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VibeHex</h1>
+            <h2>Turn vibes into color</h2>
+            <h3>Generate unique palettes from just a few words</h3>
+        </header>
+        <section class="intro">
+            <p>
+                Describe a mood, scene, or aesthetic. We'll translate it into a 5-color palette made for your design flow.
+            </p>
+        </section>
+        <section class="form-section">
+            <form id="vibe-form">
+                <input type="text" id="vibe-input" placeholder='e.g. "Calm beach at sunset" or "Cyberpunk neon night"'>
+                <input type="submit" value="Generate Palette">
+            </form>
+        </section>
+        <section id="palette-section" class="palette-section">
+            <!-- Palette will be displayed here -->
+        </section>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

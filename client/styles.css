@@ -1,0 +1,118 @@
+/* Reset some basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic layout and typography */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom right, #f0f4f8, #e4e8eb);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: #FF7373;
+}
+
+header h2 {
+    font-size: 2rem;
+    color: #555;
+}
+
+header h3 {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    color: #444;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type="submit"] {
+    background-color: #FF7373;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #ff5c5c;
+}
+
+/* Palette Display */
+.palette-section {
+    margin-top: 20px;
+}
+
+.palette-section div {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    header h2 {
+        font-size: 1.8rem;
+    }
+
+    header h3 {
+        font-size: 1rem;
+    }
+
+    form {
+        gap: 10px;
+    }
+
+    input[type="submit"] {
+        font-size: 1rem;
+        padding: 8px;
+    }
+}
