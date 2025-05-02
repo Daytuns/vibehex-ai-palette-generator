@@ -11,20 +11,26 @@
 </head>
 <body>
     <div class="container">
+        <div class="author-container">
+            <ul class="author">
+                <li className="text-[#a1a1a1] pt-1.5 text-xs">
+                    <p>&#169; 2025 Dayton Baldizón</p>
+                </li>
+            </ul>
+        </div>
         <header>
-            <h1>VibeHex</h1>
-            <h2>Turn vibes into color</h2>
-            <h3>Generate unique palettes from just a few words</h3>
+            <h1>
+                VibeHex
+                <svg fill="#000000" width="4vw" height="4vw" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M17.895 3.553A1.001 1.001 0 0 0 17 3H7c-.379 0-.725.214-.895.553l-4 8a1 1 0 0 0 0 .895l4 8c.17.338.516.552.895.552h10c.379 0 .725-.214.895-.553l4-8a1 1 0 0 0 0-.895l-4-7.999zM19.382 11h-7.764l-3-6h7.764l3 6zm-3 8H8.618l3-6h7.764l-3 6z"></path></g></svg>
+            </h1>
+            <h3>
+                Generate unique palettes from just a few words.
+            </h3>
         </header>
-        <section class="intro">
-            <p>
-                Describe a mood, scene, or aesthetic. We'll translate it into a 5-color palette made for your design flow.
-            </p>
-        </section>
         <section class="form-section">
             <form id="vibe-form">
                 <input type="text" id="vibe-input" placeholder='e.g. "Calm beach at sunset" or "Cyberpunk neon night"'>
-                <input type="submit" value="Generate Palette">
+                <input type="submit" value="Create">
             </form>
         </section>
     </div>
