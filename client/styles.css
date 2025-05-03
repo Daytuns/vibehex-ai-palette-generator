@@ -69,10 +69,8 @@ body {
     height: 100vh;
     padding: 20px;
     background-color: #EAEEF1;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     border-radius: 10px;
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -92,8 +90,9 @@ header h2 {
 header h3 {
     font-size: 1.2rem;
     color: #777;
-    margin-bottom: 20px;
+    margin-bottom: 1.5vw;
 }
+/* header h3 marginbottom 20 px */
 
 .intro p {
     font-size: 1.1rem;
@@ -128,8 +127,6 @@ input[type="text"] {
     padding: 10px;
     font-size: 1rem;
     border: none;
-    /* border: 1px solid #ccc; */
-    /* border-radius: 0.35vw; */
     border-top-left-radius: 1vw;
     border-bottom-left-radius: 1vw;
     border: none;
@@ -137,6 +134,12 @@ input[type="text"] {
     height: 100%;
     width: 100%;
     background-color: white;
+    color: black;
+}
+
+input[type="text"]::placeholder {
+    color: #9f9f9f;
+    opacity: 0.5;
 }
 
 input[type="text"].focused{
@@ -264,3 +267,17 @@ button[type="submit"]:hover svg path{
     cursor: pointer;
 }
 
+#alertDiv{
+    position: fixed;
+    top: 0;
+    left: 15vw;
+    background-color: #007a4d;
+    margin: 3vw;
+    color: white;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    border-radius: 1vw;
+    font-weight: 600;
+}

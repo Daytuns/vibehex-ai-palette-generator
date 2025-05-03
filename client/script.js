@@ -75,7 +75,15 @@ for (let i=0; i<5;i++){
     divs[i].addEventListener("click", () => {
         divs[i].a
         navigator.clipboard.writeText(initial_colors[i]).then(() => {
-            alert("Copied: " + initial_colors[i]);
+            //alert("Copied: " + initial_colors[i]);
+            const copiedAlert = document.createElement("div");
+            copiedAlert.style.display = "flex";
+            copiedAlert.id = "alertDiv";
+            copiedAlert.textContent = "Copied to Clipboard."
+            document.body.appendChild(copiedAlert);
+            setTimeout(function() {
+                copiedAlert.remove();
+            }, 3000);
         }).catch(err => {
             console.error("Failed to copy: ", err);
         });
@@ -150,7 +158,14 @@ async function fetchPalette() {
             // Add clipboard copy behavior
             newDiv.addEventListener("click", () => {
                 navigator.clipboard.writeText(color).then(() => {
-                    alert("Copied: " + color);
+                    const copiedAlert = document.createElement("div");
+                    copiedAlert.style.display = "flex";
+                    copiedAlert.id = "alertDiv";
+                    copiedAlert.textContent = "Copied to Clipboard."
+                    document.body.appendChild(copiedAlert);
+                    setTimeout(function() {
+                    copiedAlert.remove();
+                    }, 3000);
                 }).catch(err => {
                     console.error("Failed to copy: ", err);
                 });
@@ -164,16 +179,6 @@ async function fetchPalette() {
     loader.style.display = "none";
 }
 
-function copyColor(event) {
-    /* Get the text field */
-    var copyText = event.currentTarget.firstElementChild.nextElementSibling.value
-      
-     /* Copy the text inside the text field */
-    navigator.clipboard.writeText(copyText);
-  
-    /* Alert the copied text */
-    alert("Copied: " + copyText);
-  } 
 
 
 
