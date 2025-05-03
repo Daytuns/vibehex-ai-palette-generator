@@ -114,23 +114,37 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
 
 async function fetchPalette(vibe) {
-    const response = await fetch("http://localhost:5000/generate-palette", {
+    const prompt = `Only return a Python list of 5 hexadecimal color codes that match this vibe: '${vibe}'. No explanation. No labels. Just the list.`;
+
+    const response = await fetch("http://localhost:3000/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vibe })
+        body: JSON.stringify({ prompt })
     });
 
     const data = await response.json();
 
-    let palette = data.palette.replace(/```[\s\S]*?```/g, match => 
+    let rawText;
+    try {
+        rawText = data.candidates[0].content.parts[0].text.trim();
+    } catch (error) {
+        console.error("Invalid response structure:", data);
+        loader.style.display = "none";
+        return;
+    }
+
+    // Clean up the text (remove Python code block wrapping, single quotes, etc.)
+    rawText = rawText.replace(/```[\s\S]*?```/g, match => 
         match.replace(/```(python)?\n?/, "").replace(/```/, "")
     ).replace(/'/g, '"');
 
+    let palette;
     try {
-        palette = JSON.parse(palette);
+        palette = JSON.parse(rawText);
     } catch (error) {
-        console.error("Error parsing palette:", error);
-        palette = [];
+        console.error("Error parsing palette:", rawText);
+        loader.style.display = "none";
+        return;
     }
 
     if (palette.length === 5) {
@@ -138,43 +152,37 @@ async function fetchPalette(vibe) {
             const color = palette[i];
             const div = divs[i];
             const head = document.getElementById(`${div.id}Head`);
-    
+
             div.style.backgroundColor = color;
             head.textContent = color;
-    
+
             const rgb = hexToRgb(color);
             div.style.color = getTextColor(rgb);
-    
-            // Remove any previous click listener first (optional)
+
             const newDiv = div.cloneNode(true);
             div.parentNode.replaceChild(newDiv, div);
-    
-            // Reassign the element in the array to keep it updated
             divs[i] = newDiv;
-    
-            // Add clipboard copy behavior
+
             newDiv.addEventListener("click", () => {
                 navigator.clipboard.writeText(color).then(() => {
                     const copiedAlert = document.createElement("div");
                     copiedAlert.style.display = "flex";
                     copiedAlert.id = "alertDiv";
-                    copiedAlert.textContent = "Copied to Clipboard."
+                    copiedAlert.textContent = "Copied to Clipboard.";
                     document.body.appendChild(copiedAlert);
-                    setTimeout(function() {
-                    copiedAlert.remove();
-                    }, 3000);
+                    setTimeout(() => copiedAlert.remove(), 3000);
                 }).catch(err => {
                     console.error("Failed to copy: ", err);
                 });
             });
         }
-    }
-     else {
-        console.error("Unexpected palette:", data);
+    } else {
+        console.error("Unexpected palette:", palette);
     }
 
     loader.style.display = "none";
 }
+
 
 
 

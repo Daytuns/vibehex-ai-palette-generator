@@ -160,8 +160,6 @@ button[type="submit"] {
     color: black;
     height: 100%;
     border: none;
-    /* border-top-right-radius: 1vw;
-    border-bottom-right-radius: 1vw; */
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -169,12 +167,6 @@ button[type="submit"] {
     justify-content: center;
     position: relative;
     right: 0.5rem;
-    /* font-size: 0.8rem;
-    font-weight: 600; */
-    /* padding-bottom: 0.6vw;
-    padding-top: 0.6vw;
-    padding-left: 1.5vw;
-    padding-right: 1.5vw; */
     padding-left: 0.5vw;
     padding-right: 0.5vw;
     cursor: pointer;
@@ -187,12 +179,12 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: black;
+    scale: 1.2em;
 }
 
 button[type="submit"]:hover svg path{
-    fill: white;
-    stroke: white;
+    transform: scale(2);
+    transform: translateY(-5%);
 }
 
  #loader {
