@@ -60,7 +60,22 @@ function getTextColor(bgColor) {
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const vibe = document.querySelector("input[type='text']").value;
+    for (let i=0; i<5;i++){
+        document.getElementById(`${divs[i].id}`).style.backgroundColor = "#EAEEF1";
+        document.getElementById(`${divs[i].id}Head`).textContent = "";
+    }
+
+    const loader = document.getElementById("loader");
+    loader.style.display = "block"; 
+
+    const vibe = document.querySelector("input[type='text']").value.trim();
+
+    if (!vibe) {
+        alert("Please enter a vibe before submitting.");
+        loader.style.display = "none";
+        return;
+    }
+    
 
     const response = await fetch("http://localhost:5000/generate-palette", {
         method: "POST",
@@ -119,6 +134,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     } else {
         console.error(data.error);
     }
+
+    loader.style.display = "none";
 
 });
 
