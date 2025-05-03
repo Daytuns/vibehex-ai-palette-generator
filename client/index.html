@@ -30,7 +30,16 @@
         <section class="form-section">
             <form id="vibe-form">
                 <input type="text" id="vibe-input" placeholder='e.g. "Calm beach at sunset" or "Cyberpunk neon night"'>
-                <input type="submit" value="Create">
+                <button type="submit">
+                    <svg fill="#000000" width="1vw" height="1vw" viewBox="0 0 330 330" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M250.606,154.389l-150-149.996c-5.857-5.858-15.355-5.858-21.213,0.001 
+                               c-5.857,5.858-5.857,15.355,0.001,21.213l139.393,139.39L79.393,304.394
+                               c-5.857,5.858-5.857,15.355,0.001,21.213 C82.322,328.536,86.161,330,
+                               90,330s7.678-1.464,10.607-4.394l149.999-150.004c2.814-2.813,
+                               4.394-6.628,4.394-10.606 C255,161.018,253.42,157.202,250.606,
+                               154.389z" stroke="black" stroke-width="20"/>
+                    </svg>
+                </button>
             </form>
         </section>
         <div class="gemini-container">
@@ -41,10 +50,10 @@
             </ul>
         </div>
     </div>
-    <div id="loader" class="loader" style="display: none;"></div>
+    <div id="loader" style="width: 6vw; height: 6vw;"></div>
     <section id="palette-section" class="palette-section">
         <div id="one">
-            <h1 id="oneHead">
+            <h1 id="oneHead"></h1>
         </div>
         <div id="two">
             <h1 id="twoHead"></h1>
@@ -60,6 +69,43 @@
         </div>
     </section> 
     <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+    <script type="module">
+        import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.module.js"
+        import { animate, frame } from "https://cdn.jsdelivr.net/npm/motion@12.9.0/+esm"
+      
+        const container = document.getElementById("loader")
+      
+        const scene = new THREE.Scene()
+        const camera = new THREE.PerspectiveCamera(25, container.offsetWidth / container.offsetHeight, 0.1, 1000)
+        camera.position.z = 5
+      
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+        renderer.setSize(container.offsetWidth, container.offsetHeight)
+        renderer.setClearColor(0x000000, 0) // transparent background
+        container.appendChild(renderer.domElement)
+      
+        const geometry = new THREE.BoxGeometry()
+        const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
+        const cube = new THREE.Mesh(geometry, material)
+      
+        const light = new THREE.AmbientLight(0x000000, 1)
+        const directional = new THREE.DirectionalLight(0xffffff, 1)
+        directional.position.set(2, 2, 2)
+      
+        scene.add(light, directional, cube)
+      
+        function rad(deg) {
+          return deg * Math.PI / 180
+        }
+      
+        animate(cube.rotation, { y: rad(360), z: rad(360) }, {
+          duration: 5, repeat: Infinity, ease: "linear"
+        })
+      
+        frame.render(() => renderer.render(scene, camera), true)
+
+        container.style.display = 'none';
+      </script>
     <script src="./script.js"></script>
 </body>
 </html>

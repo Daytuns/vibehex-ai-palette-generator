@@ -56,18 +56,51 @@ function getTextColor(bgColor) {
 }
 
 
+initial_colors = ['#F2F0EB', '#E8E2DC', '#D1CFC7', '#333333', '#EB4747'];
+const loader = document.getElementById("loader");
+// loader.style.display = "none";
 
-document.querySelector("form").addEventListener("submit", async (e) => {
+const colorsDiv = document.createElement("div");
+colorsDiv.style.display = "flex";
+colorsDiv.id = "colorsDiv";
+document.body.appendChild(colorsDiv);
+
+for (let i=0; i<5;i++){
+    divs[i].classList.add("specificColor")
+    document.getElementById(`${divs[i].id}`).style.backgroundColor = initial_colors[i];
+    document.getElementById(`${divs[i].id}Head`).textContent = initial_colors[i];
+    const rgb = hexToRgb(initial_colors[i]);
+    document.getElementById(`${divs[i].id}`).style.color = getTextColor(rgb);
+
+    divs[i].addEventListener("click", () => {
+        divs[i].a
+        navigator.clipboard.writeText(initial_colors[i]).then(() => {
+            alert("Copied: " + initial_colors[i]);
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });
+    });
+}
+
+
+document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
 
-    for (let i=0; i<5;i++){
+
+    for (let i = 0; i < 5; i++) {
         document.getElementById(`${divs[i].id}`).style.backgroundColor = "#EAEEF1";
         document.getElementById(`${divs[i].id}Head`).textContent = "";
     }
 
-    const loader = document.getElementById("loader");
-    loader.style.display = "block"; 
+    loader.style.display = "block";
 
+    requestAnimationFrame(() => {
+        fetchPalette(); // this ensures the loader is shown before fetch starts
+    });
+});
+
+
+async function fetchPalette() {
     const vibe = document.querySelector("input[type='text']").value.trim();
 
     if (!vibe) {
@@ -75,68 +108,72 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         loader.style.display = "none";
         return;
     }
-    
 
     const response = await fetch("http://localhost:5000/generate-palette", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vibe })
     });
 
     const data = await response.json();
-    console.log("Raw response from Gemini:", data.palette);
 
-    // Clean the response by removing code block markers and fixing quotes
-    let palette = data.palette.replace(/```[\s\S]*?```/g, match => match.replace(/```(python)?\n?/, "").replace(/```/, "")).replace(/'/g, '"');
+    let palette = data.palette.replace(/```[\s\S]*?```/g, match => 
+        match.replace(/```(python)?\n?/, "").replace(/```/, "")
+    ).replace(/'/g, '"');
+
+    try {
+        palette = JSON.parse(palette);
+    } catch (error) {
+        console.error("Error parsing palette:", error);
+        palette = [];
+    }
+
+    if (palette.length === 5) {
+        for (let i = 0; i < 5; i++) {
+            const color = palette[i];
+            const div = divs[i];
+            const head = document.getElementById(`${div.id}Head`);
     
-    console.log("Clean response from Gemini:", palette);
-
-    if (palette) {
-        try {
-            // Parse the palette if it's a valid JSON string
-            palette = JSON.parse(palette);
-        } catch (error) {
-            palette = []; // Handle unexpected formats
-            console.error("Error parsing palette:", error);
+            div.style.backgroundColor = color;
+            head.textContent = color;
+    
+            const rgb = hexToRgb(color);
+            div.style.color = getTextColor(rgb);
+    
+            // Remove any previous click listener first (optional)
+            const newDiv = div.cloneNode(true);
+            div.parentNode.replaceChild(newDiv, div);
+    
+            // Reassign the element in the array to keep it updated
+            divs[i] = newDiv;
+    
+            // Add clipboard copy behavior
+            newDiv.addEventListener("click", () => {
+                navigator.clipboard.writeText(color).then(() => {
+                    alert("Copied: " + color);
+                }).catch(err => {
+                    console.error("Failed to copy: ", err);
+                });
+            });
         }
-
-        console.log("Generated Palette:", palette);
-        // Display the palette
-        const colorsDiv = document.createElement("div");
-        colorsDiv.style.display = "flex";
-        colorsDiv.id = "colorsDiv";
-        // palette.forEach(color => {
-        //     const swatch = document.createElement("div");
-        //     swatch.style.backgroundColor = color;
-        //     swatch.style.width = "50px";
-        //     swatch.style.height = "50px";
-        //     swatch.style.marginRight = "10px";
-        //     colorsDiv.appendChild(swatch);
-        // });
-        document.body.appendChild(colorsDiv);
-        for (let i=0; i<5;i++){
-            document.getElementById(`${divs[i].id}`).style.backgroundColor = palette[i];
-            document.getElementById(`${divs[i].id}Head`).textContent = palette[i];
-            const rgb = hexToRgb(palette[i]);
-            // const brightness = rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114;
-            
-            document.getElementById(`${divs[i].id}`).style.color = getTextColor(rgb);
-
-
-            // if (brightness > 220) {
-            //     document.getElementById(`${divs[i].id}`).style.color = "#000000";
-            // } else {
-            //     document.getElementById(`${divs[i].id}`).style.color = "#ffffff";
-            // }
-        }
-    } else {
-        console.error(data.error);
+    }
+     else {
+        console.error("Unexpected palette:", data);
     }
 
     loader.style.display = "none";
+}
 
-});
+function copyColor(event) {
+    /* Get the text field */
+    var copyText = event.currentTarget.firstElementChild.nextElementSibling.value
+      
+     /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText);
+  
+    /* Alert the copied text */
+    alert("Copied: " + copyText);
+  } 
+
 
 
