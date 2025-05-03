@@ -116,7 +116,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
 async function fetchPalette(vibe) {
     const prompt = `Only return a Python list of 5 hexadecimal color codes that match this vibe: '${vibe}'. No explanation. No labels. Just the list.`;
 
-    const response = await fetch("http://localhost:3000/generate", {
+    const response = await fetch("https://vibehex-backend.onrender.com/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt })
