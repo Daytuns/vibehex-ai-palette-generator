@@ -94,6 +94,11 @@ for (let i=0; i<5;i++){
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const vibe = input.value.trim();
+    if (!vibe) {
+        alert("Please enter a vibe before submitting.");
+        return;
+    }
 
     for (let i = 0; i < 5; i++) {
         document.getElementById(`${divs[i].id}`).style.backgroundColor = "#EAEEF1";
@@ -101,22 +106,14 @@ document.querySelector("form").addEventListener("submit", (e) => {
     }
 
     loader.style.display = "block";
-
     requestAnimationFrame(() => {
-        fetchPalette(); // this ensures the loader is shown before fetch starts
+        fetchPalette(vibe); // pass vibe directly
     });
 });
 
 
-async function fetchPalette() {
-    const vibe = document.querySelector("input[type='text']").value.trim();
 
-    if (!vibe) {
-        alert("Please enter a vibe before submitting.");
-        loader.style.display = "none";
-        return;
-    }
-
+async function fetchPalette(vibe) {
     const response = await fetch("http://localhost:5000/generate-palette", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
