@@ -47,5 +47,4 @@ All rights reserved.
 
 Copyright (c) 2025 Dayton Baldizón
 
-Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited.
 ```
