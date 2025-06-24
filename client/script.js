@@ -7,6 +7,33 @@ const divs = [firstDiv, secondDiv, thirdDiv, fourthDiv, fifthDiv];
 
 const form = document.getElementById("vibe-form");
 const input = document.getElementById("vibe-input");
+const toast = document.getElementById("toast");
+const paletteSection = document.getElementById("palette-section");
+
+// Function to check if device is mobile
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
+// Show toast notification on page load
+window.addEventListener('load', () => {
+    toast.style.display = 'block';
+    // Toast will automatically hide due to CSS animation
+
+    // Check if mobile and adjust layout
+    if (isMobile()) {
+        paletteSection.style.display = 'flex';
+    }
+});
+
+// Handle window resize events
+window.addEventListener('resize', () => {
+    if (isMobile()) {
+        paletteSection.style.display = 'flex';
+    } else {
+        paletteSection.style.display = 'flex';
+    }
+});
 
 input.addEventListener("focus", () => {
     form.classList.add("focused");
@@ -73,7 +100,6 @@ for (let i=0; i<5;i++){
     document.getElementById(`${divs[i].id}`).style.color = getTextColor(rgb);
 
     divs[i].addEventListener("click", () => {
-        divs[i].a
         navigator.clipboard.writeText(initial_colors[i]).then(() => {
             //alert("Copied: " + initial_colors[i]);
             const copiedAlert = document.createElement("div");
@@ -111,7 +137,23 @@ document.querySelector("form").addEventListener("submit", (e) => {
     });
 });
 
-
+// Add touchstart event listeners for better mobile experience
+divs.forEach((div, index) => {
+    div.addEventListener("touchstart", () => {
+        navigator.clipboard.writeText(initial_colors[index]).then(() => {
+            const copiedAlert = document.createElement("div");
+            copiedAlert.style.display = "flex";
+            copiedAlert.id = "alertDiv";
+            copiedAlert.textContent = "Copied to Clipboard."
+            document.body.appendChild(copiedAlert);
+            setTimeout(function() {
+                copiedAlert.remove();
+            }, 3000);
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });
+    });
+});
 
 async function fetchPalette(vibe) {
     const prompt = `Only return a Python list of 5 hexadecimal color codes that match this vibe: '${vibe}'. No explanation. No labels. Just the list.`;
@@ -163,7 +205,21 @@ async function fetchPalette(vibe) {
             div.parentNode.replaceChild(newDiv, div);
             divs[i] = newDiv;
 
+            // Add both click and touch events for the new div
             newDiv.addEventListener("click", () => {
+                navigator.clipboard.writeText(color).then(() => {
+                    const copiedAlert = document.createElement("div");
+                    copiedAlert.style.display = "flex";
+                    copiedAlert.id = "alertDiv";
+                    copiedAlert.textContent = "Copied to Clipboard.";
+                    document.body.appendChild(copiedAlert);
+                    setTimeout(() => copiedAlert.remove(), 3000);
+                }).catch(err => {
+                    console.error("Failed to copy: ", err);
+                });
+            });
+            
+            newDiv.addEventListener("touchstart", () => {
                 navigator.clipboard.writeText(color).then(() => {
                     const copiedAlert = document.createElement("div");
                     copiedAlert.style.display = "flex";
@@ -182,8 +238,3 @@ async function fetchPalette(vibe) {
 
     loader.style.display = "none";
 }
-
-
-
-
-

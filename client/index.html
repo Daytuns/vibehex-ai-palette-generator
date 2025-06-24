@@ -3,7 +3,7 @@
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeHex - AI Palette Generator</title>
@@ -12,37 +12,39 @@
 </head>
 <body>
     <div class="container">
-        <div class="author-container">
-            <ul class="author">
+        <div class="credits-container">
+            <ul class="credits">
                 <li>
                     <a class="cr" href="https://www.linkedin.com/in/daytonbaldizon/" style="text-decoration:none" target="_blank">&#169; 2025 Dayton Baldizón</a>
+                    <span class="separator">|</span>
+                    <span>Powered by <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.0-flash-exp" class="gradient-text" target="_blank">Gemini</a></span>
                 </li>
             </ul>
         </div>
         <header>
             <h1>
-                VibeHex<svg id="cube" fill="#000000" width="4vw" height="4vw" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M17.895 3.553A1.001 1.001 0 0 0 17 3H7c-.379 0-.725.214-.895.553l-4 8a1 1 0 0 0 0 .895l4 8c.17.338.516.552.895.552h10c.379 0 .725-.214.895-.553l4-8a1 1 0 0 0 0-.895l-4-7.999zM19.382 11h-7.764l-3-6h7.764l3 6zm-3 8H8.618l3-6h7.764l-3 6z"></path></g></svg>
+                VibeHex
             </h1>
             <h3>
-                Generate unique palettes from just a few words.
+                Generate unique palettes from just a few words
             </h3>
         </header>
         <section class="form-section">
-            <form id="vibe-form">
-                <input type="text" id="vibe-input" placeholder='e.g. "Calm beach at sunset"'>
-                <button type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m21.426 11.095-17-8A.999.999 0 0 0 3.03 4.242L4.969 12 3.03 19.758a.998.998 0 0 0 1.396 1.147l17-8a1 1 0 0 0 0-1.81zM5.481 18.197l.839-3.357L12 12 6.32 9.16l-.839-3.357L18.651 12l-13.17 6.197z"></path></svg>
-                </button>
-            </form>
+            <div class="search-container">
+                <div class="info-tooltip">
+                    <div class="tooltip-icon">i</div>
+                    <span class="tooltip-text">First Run takes about 30-40 seconds to restart server since running on free tier.</span>
+                </div>
+                <form id="vibe-form">
+                    <input type="text" id="vibe-input" placeholder='e.g. "Calm beach at sunset"'>
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m21.426 11.095-17-8A.999.999 0 0 0 3.03 4.242L4.969 12 3.03 19.758a.998.998 0 0 0 1.396 1.147l17-8a1 1 0 0 0 0-1.81zM5.481 18.197l.839-3.357L12 12 6.32 9.16l-.839-3.357L18.651 12l-13.17 6.197z"></path></svg>
+                    </button>
+                </form>
+            </div>
         </section>
-        <div class="gemini-container">
-            <ul class="gemini-text">
-                <li>
-                    <p>Powered by <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.0-flash-exp" class="gradient-text" target="_blank">Gemini</a></p>
-                </li>
-            </ul>
-        </div>
     </div>
+    <div id="toast" class="toast-notification" style="display:none;">First Run takes about 30-40 seconds to restart server since running on free tier.</div>
     <div id="loader" style="width: 6vw; height: 6vw;"></div>
     <section id="palette-section" class="palette-section">
         <div id="one">
@@ -88,10 +90,6 @@
 
         const geometry = new THREE.BoxGeometry();
         const cube = new THREE.Mesh(geometry, materials);
-
-        // const geometry = new THREE.BoxGeometry()
-        // const material = new THREE.MeshPhongMaterial({ color: 0x999999 })
-        // const cube = new THREE.Mesh(geometry, material)
       
         const light = new THREE.AmbientLight(0xffffff, 1)
         const directional = new THREE.DirectionalLight(0xffffff, 1.2)
